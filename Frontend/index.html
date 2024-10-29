@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MQTT Subscriber e Publisher</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 2rem; }
+    .container { max-width: 600px; margin: 0 auto; }
+    input, button { padding: 0.5rem; margin-top: 0.5rem; width: 100%; }
+    #messages { margin-top: 1rem; padding: 1rem; background-color: #f4f4f4; }
+    .message { padding: 0.5rem; border-bottom: 1px solid #ccc; }
+  </style>
+  <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>MQTT Subscriber e Publisher</h1>
+
+    <!-- Seção de Subscriber -->
+    <h2>Subscribe (Inscrever-se)</h2>
+    <input type="text" id="subscribeTopic" placeholder="Tópico para inscrever-se">
+    <button onclick="subscribeTopic()">Inscrever-se</button>
+
+    <!-- Seção de Publisher -->
+    <h2>Publish (Publicar)</h2>
+    <input type="text" id="publishTopic" placeholder="Tópico para publicar">
+    <input type="text" id="publishMessage" placeholder="Mensagem para publicar">
+    <button onclick="publishMessage()">Publicar</button>
+
+    <!-- Exibição de Mensagens Recebidas -->
+    <h2>Mensagens Recebidas</h2>
+    <div id="messages"></div>
+  </div>
+
+  <script src="./app.js" type="module"></script>
+</body>
+</html>
