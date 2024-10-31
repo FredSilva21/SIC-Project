@@ -1,9 +1,13 @@
 const { User } = require("../models/index");
 
-exports.getAllUsers = async (req, res) => {
+
+exports.getUser = async (req, res) => {
   try {
-    const users = await User.findAll();
-    res.status(200).json(users);
+    const user = await User.findOne({ where: { id: req.params.id } });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    return res.status(200).json(user);
   } catch (error) {
     console.log(error);
     res.status(500).send({
@@ -11,4 +15,4 @@ exports.getAllUsers = async (req, res) => {
       details: error,
     });
   }
-};
+}

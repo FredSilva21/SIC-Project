@@ -1,5 +1,6 @@
+const { DataTypes } = require("sequelize");
 const sequelize = require("../sequelizeconnection");
-const { Sequelize, DataTypes, ENUM } = require("sequelize");
+
 const Park = sequelize.define(
   "Park",
   {
@@ -7,6 +8,7 @@ const Park = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
+      autoIncrement: true,
     },
     name: {
       type: DataTypes.STRING,
@@ -16,9 +18,10 @@ const Park = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    rating: {
-      type: DataTypes.ENUM,
-      values: ["1", "2", "3", "4", "5"],
+    average_rating: {
+      type: DataTypes.FLOAT,
+      allowNull: true,
+      defaultValue: 0,
     },
     capacity: {
       type: DataTypes.INTEGER,
@@ -28,11 +31,8 @@ const Park = sequelize.define(
       type: DataTypes.DECIMAL(5, 2),
       allowNull: false,
     },
-    // image: {
-    //   type: DataTypes.STRING,
-    //   allowNull: false,
-    // },
   },
   { tableName: "park", timestamps: false }
 );
+
 module.exports = Park;
