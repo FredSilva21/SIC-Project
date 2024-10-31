@@ -9,6 +9,7 @@ const Place = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
+      autoIncrement: true,
     },
     id_park: {
       type: DataTypes.INTEGER,

@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const { User } = require("../Models/index");
+const { User } = require("../models/index");
 const secret = process.env.JWT_Secret;
 
 module.exports = {
@@ -18,17 +18,17 @@ module.exports = {
     try {
       const payload = jwt.decode(bearer, secret);
 
-      const user = await User.findByPk(payload.id);
-
+      const user = await User.findByPk(payload.id.id_user);
       if (user != null) {
-        res.locals.userId = payload.id;
+        res.locals.userId = payload.id.id_user;
         next();
       } else {
         res.status(401).send({ message: "User does not exist" });
       }
     } catch (error) {
+      console.log(error)
       res
-        .status(400)
+        .status(500)
         .send({ message: "Something went wrong...", details: error });
     }
   },
@@ -57,6 +57,7 @@ module.exports = {
         });
       }
     } catch (error) {
+      console.log(error)
       res
         .status(400)
         .send({ message: "Something went wrong...", details: error });
