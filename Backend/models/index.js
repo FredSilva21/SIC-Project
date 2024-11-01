@@ -20,8 +20,6 @@ Payment.belongsTo(User, { foreignKey: "id_user" });
 Park.hasMany(Report, { foreignKey: "id_park" });
 Report.belongsTo(Park, { foreignKey: "id_park" });
 
-User.hasMany(Report, { foreignKey: "id_user" });
-Report.belongsTo(User, { foreignKey: "id_user" });
 
 User.sync({ logging: false })
   .then(() => Park.sync({ logging: false }))
