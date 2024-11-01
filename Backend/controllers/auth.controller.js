@@ -2,7 +2,6 @@ const { User } = require("../models/index");
 const { compareHash,createHash } = require("../middleware/bcrypt");
 const { SignToken } = require("../middleware/jwt");
 
-//Done
 exports.register = async (req, res) => {
   const {name, email, password } = req.body;
 
@@ -38,7 +37,6 @@ exports.register = async (req, res) => {
   }
 };
 
-//Done
 exports.login = async (req, res) => {
   const { email, password } = req.body;
 
