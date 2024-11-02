@@ -22,6 +22,7 @@ app.use("/", require("./routes/place.routes"))
 //app.use("/", require("./routes/payment.routes"))
 app.use("/", require("./routes/report.routes"))
 app.use("/", require("./routes/rating.routes"))
+app.use("/",require("./routes/payment.routes"))
 // handle invalid routes
 app.all('*', function (req, res) {
 	res.status(400).json({ success: false, msg: `The API does not recognize the request on ${req.url}` });
