@@ -6,9 +6,6 @@ const Payment = require("./payment");
 const Report = require("./report");
 const ParkRating = require("./park_rating");
 
-User.hasMany(Place, { foreignKey: "id_user" });
-Place.belongsTo(User, { foreignKey: "id_user" });
-
 Park.hasMany(Place, { foreignKey: "id_park" });
 Place.belongsTo(Park, { foreignKey: "id_park" });
 
