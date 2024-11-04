@@ -1,5 +1,6 @@
 const sequelize = require("../sequelizeconnection");
 const { Sequelize, DataTypes } = require("sequelize");
+const { Park } = require("./index")
 const Report = sequelize.define(
   "Report",
   {
@@ -7,13 +8,18 @@ const Report = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
+      autoIncrement: true,
     },
-    id_user: {
+    id_park: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      references:{
+        model: Park,
+        key: "id_park",
+      }
     },
-    id_place: {
-      type: DataTypes.INTEGER,
+    name: {
+      type: DataTypes.STRING,
       allowNull: false,
     },
     average_occupation: {

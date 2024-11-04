@@ -19,34 +19,24 @@ const Place = sequelize.define(
         key: "id_park",
       },
     },
-    id_user: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: User,
-        key: "id_user",
-      },
-    },
     start: {
       type: DataTypes.DATE,
       allowNull: false,
-      defaultValue: DataTypes.NOW,
+      defaultValue: Sequelize.NOW,
     },
     end: {
       type: DataTypes.DATE,
       allowNull: true,
-      defaultValue: null,
     },
-    isPayed: {
+    is_ocupied: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-      defaultValue: false,
+      defaultValue: true,
     },
-    amount: {
-      type: DataTypes.FLOAT,
-      allowNull: true,
-      defaultValue: null,
-  }},
-  { tableName: "Place", timestamps: false }
+  },
+  {
+    tableName: "Place",
+    timestamps: false,
+  }
 );
 module.exports = Place;

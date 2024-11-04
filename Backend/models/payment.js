@@ -2,6 +2,7 @@ const sequelize = require("../sequelizeconnection");
 const { Sequelize, DataTypes } = require("sequelize");
 const Place = require("./place");
 const User = require("./user");
+const Park = require("./park");
 const Payment = sequelize.define(
   "Payment",
   {
@@ -9,6 +10,7 @@ const Payment = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
+      autoIncrement: true,
     },
     id_place: {
       type: DataTypes.INTEGER,
@@ -16,6 +18,14 @@ const Payment = sequelize.define(
       references: {
         model: Place,
         key: "id_place",
+      },
+    },
+    id_park: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: Park,
+        key: "id_park",
       },
     },
     id_user: {
@@ -26,25 +36,15 @@ const Payment = sequelize.define(
         key: "id_user",
       },
     },
-    start: {
+    date: {
       type: DataTypes.DATE,
       allowNull: false,
-      defaultValue: DataTypes.NOW,
-    },
-    end: {
-      type: DataTypes.DATE,
-      allowNull: true,
-      defaultValue: null,
+      defaultValue: Sequelize.NOW,
     },
     amount: {
       type: DataTypes.FLOAT,
       allowNull: false,
-    },
-    isPaid: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false,
-    },
+    }
   },
   { tableName: "Payment", timestamps: false }
 );
