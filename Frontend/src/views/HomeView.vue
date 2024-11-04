@@ -1,11 +1,18 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link>
-    <router-link to="/about">About</router-link>
-  </nav>
-
-  <div>
-    <h1>MyPark</h1>
-    <p>Welcome to MyPark, a place to share your favorite parks!</p>
-  </div>
+  <Navbar />
+  
+  <ParkingCard />
 </template>
+
+<script>
+import Navbar from '@/components/Navbar.vue';
+import ParkingCard from '@/components/ParkingCard.vue';
+
+export default{
+
+components: {
+  Navbar,
+  ParkingCard,
+},
+}
+</script>
