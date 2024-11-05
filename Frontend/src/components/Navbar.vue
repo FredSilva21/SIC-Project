@@ -5,10 +5,10 @@
           <router-link to="/"> <button>Home </button> </router-link>
         </li>
         <li class="navbar-item">
-            <router-link to="/about"> <button>Sobre Nós</button> </router-link>
+            <router-link to="/"> <button>Sobre Nós</button> </router-link>
         </li>
         <li class="navbar-item">
-            <router-link to="/about"> <button>Contacto</button> </router-link>
+            <router-link to="/"> <button>Contacto</button> </router-link>
         </li>
       </ul>
     </nav>

@@ -9,41 +9,23 @@
   </template>
   
   <script>
+import { useParkStore } from '@/stores/parkStore';
+
   export default {
     data() {
       return {
-        park: null,
+        parkStore:useParkStore()
       };
     },
-//     created() {
-//       const parkId = this.$route.params.id;
-//       this.fetchParkDetails(parkId);
-//     },
-//     methods: {
-//       fetchParkDetails(id) {
-//         // Simulação de dados; idealmente, obterias isto de uma API ou base de dados
-//         const parks = [
-//           {
-//             id: '1',
-//             name: 'Parque Central',
-//             image: 'https://example.com/image1.jpg',
-//             location: 'Rua das Flores, 123',
-//             pricePerHour: 2.5,
-//             description: 'Parque de estacionamento com ampla capacidade e segurança 24 horas.',
-//           },
-//           {
-//             id: '2',
-//             name: 'Parque Avenida',
-//             image: 'https://example.com/image2.jpg',
-//             location: 'Avenida Principal, 456',
-//             pricePerHour: 3.0,
-//             description: 'Localização central, ideal para quem quer acesso fácil a pontos turísticos.',
-//           },
-//         ];
-//         // Busca o parque pelo ID
-//         this.park = parks.find((p) => p.id === id);
-//       },
-//     },
+    created() {
+      const parkId = this.$route.params.id;
+      console.log(parkId)
+    },
+    computed: {
+      park() {
+        return this.parkStore.getPark;
+      }
+    },
  };
   </script>
   

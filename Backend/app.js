@@ -16,10 +16,10 @@ app.get('/', function (req, res) {
 
 // routing middleware
 app.use('/', require('./routes/auth.routes'));
-//app.use('/', require('./routes/user.routes'));
+app.use('/', require('./routes/user.routes'));
 app.use('/', require('./routes/park.routes'));
 app.use("/", require("./routes/place.routes"))
-//app.use("/", require("./routes/payment.routes"))
+app.use("/", require("./routes/payment.routes"))
 app.use("/", require("./routes/report.routes"))
 app.use("/", require("./routes/rating.routes"))
 app.use("/",require("./routes/payment.routes"))

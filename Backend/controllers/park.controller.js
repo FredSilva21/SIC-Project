@@ -50,7 +50,7 @@ exports.getPark = async (req, res) => {
     if (!park) {
       return res.status(404).json({ error: "Park not found" });
     }
-    return res.status(200).json(park);
+    return res.status(200).json({ success: "Retrieved park", park: park });
   } catch (error) {
     console.log(error);
     res.status(500).send({

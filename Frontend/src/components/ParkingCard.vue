@@ -1,11 +1,11 @@
 <template>
-    <router-link to="/park" class="parking-card">
+    <router-link :to="{ name: 'park', params: { id: park.id } }" class="parking-card">
         <div class="parking-card">
             <img src="../assets/img/parque1.jpeg" alt="Parque 1" class="parking-image" />
             <div class="parking-info">
-                <h3 class="parking-name">Parque 1</h3>
-                <p class="parking-location">Rua Parque 1, Porto</p>
-                <p class="parking-price">Preço por Hora:  2.30 €</p>
+                <h3 class="parking-name">{{ park.name }}</h3>
+                <p class="parking-location">{{ park.location }}</p>
+                <p class="parking-price">Preço por Hora:  {{ park.price }} €</p>
             </div>
         </div>
     </router-link>
@@ -14,10 +14,19 @@
 <script>
     export default {
         props: {
-            image: String,
-            name: String,
-            location: String,
-            pricePerHour: Number,
+            park: {
+                type: Object,
+                required: true,
+                default: () => ({
+                    id: 1,
+                    name: "Parque 1",
+                    location: "Rua Parque 1, Porto",
+                    average_rating: 1,
+                    capacity: 100,
+                    free_places: 50,
+                    price: 2.30,
+                }),
+            },
         }
     }
 </script>
