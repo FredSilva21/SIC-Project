@@ -43,7 +43,6 @@ export default {
         });
         if (login) {
           this.$router.push({ name: "home" });
-          console.log(`Login efetuado com sucesso`);
         }
       } catch (error) {
         console.error(error);

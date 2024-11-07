@@ -36,6 +36,10 @@ const Park = sequelize.define(
       type: DataTypes.DECIMAL(5, 2),
       allowNull: false,
     },
+    image:{
+      type: DataTypes.BLOB,
+      allowNull: false
+    }
   },
   {
     tableName: "park",

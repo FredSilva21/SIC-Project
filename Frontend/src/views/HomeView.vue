@@ -24,11 +24,11 @@ export default {
 
   created() {
     const user = localStorage.getItem("loggedIn");
-    if (user === false) {
+    if (Boolean(user) != true) {
       this.$router.push({ name: "login" });
+    }else{
+      this.useParkStore.fetchParks(); 
     }
-
-    this.useParkStore.fetchParks();
   },
 
   computed: {

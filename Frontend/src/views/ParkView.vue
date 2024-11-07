@@ -2,9 +2,11 @@
     <div class="parking-details">
       <h2>{{ park.name }}</h2>
       <img :src="park.image" alt="Imagem do Parque de Estacionamento" class="parking-image" />
-      <p class="parking-location">Localização: Rua Parque 1, Porto</p>
-      <p class="parking-price">Preço por Hora: 2.30 €</p>
-      <p class="parking-description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+      <p class="parking-location">Localização: {{ park.location }}</p>
+      <p class="parking-price">Preço por Hora: {{ park.price }} €</p>
+      <p class="parking-capacity">Capacity: {{ park.capacity }}</p>
+      <p class="parking-description">Free Places{{ park.free_places }}</p>
+      <p class="parking-average-rating">Average Rating: {{ park.average_rating }}</p>
     </div>
   </template>
   
@@ -17,9 +19,10 @@ import { useParkStore } from '@/stores/parkStore';
         parkStore:useParkStore()
       };
     },
-    created() {
-      const parkId = this.$route.params.id;
-      console.log(parkId)
+
+    created () {
+      const parkId=this.$route.params.parkId;
+      this.parkStore.fetchPark(parkId)
     },
     computed: {
       park() {
@@ -30,30 +33,36 @@ import { useParkStore } from '@/stores/parkStore';
   </script>
   
   <style scoped>
-  .parking-details {
-    max-width: 600px;
-    margin: 2rem auto;
-    text-align: center;
-  }
-  
-  .parking-image {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-    margin-top: 1rem;
-  }
-  
-  .parking-location,
-  .parking-price,
-  .parking-description {
-    font-size: 1rem;
-    margin: 0.5rem 0;
-    color: #555;
-  }
-  
-  h2 {
-    font-size: 1.8rem;
-    color: #333;
-  }
+    .parking-details {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .parking-image {
+      width: 300px;
+      height: 200px;
+      object-fit: cover;
+      margin-bottom: 20px;
+    }
+    .parking-location {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+    .parking-price {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+    .parking-capacity {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+    .parking-description {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+    .parking-average-rating {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
   </style>
   

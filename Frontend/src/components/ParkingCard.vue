@@ -1,5 +1,5 @@
 <template>
-    <router-link :to="{ name: 'park', params: { id: park.id } }" class="parking-card">
+    <router-link :to="{ name: 'park', params:{parkId:park.id_park} }" class="parking-card">
         <div class="parking-card">
             <img src="../assets/img/parque1.jpeg" alt="Parque 1" class="parking-image" />
             <div class="parking-info">
@@ -18,7 +18,7 @@
                 type: Object,
                 required: true,
                 default: () => ({
-                    id: 1,
+                    id_park: 1,
                     name: "Parque 1",
                     location: "Rua Parque 1, Porto",
                     average_rating: 1,
@@ -65,4 +65,3 @@
     color: #555;
   }
 </style>
-  

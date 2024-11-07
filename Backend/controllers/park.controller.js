@@ -1,5 +1,5 @@
 const { Park } = require("../models/index");
-
+const fs=require('fs')
 exports.getAllParks = async (req, res) => {
   try {
     const parks = await Park.findAll();
@@ -26,12 +26,21 @@ exports.createPark = async (req, res) => {
       });
     }
 
+
     const newPark = await Park.create({
       name: name,
       location: location,
       capacity: capacity,
       price: price,
+      image:""
     });
+
+    if (req.file) {
+      const image = fs.readFileSync(req.file.path);
+      const encodedImage = Buffer.from(image).toString("base64");
+      newPark.image = encodedImage;
+      fs.unlinkSync(req.file.path);
+    }
 
     return res.status(200).json({ success: "Park created", park: newPark });
   } catch (error) {
