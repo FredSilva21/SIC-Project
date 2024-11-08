@@ -52,9 +52,6 @@ exports.login = async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
 
-    console.log(user.password);
-    console.log(password);
-
     const passwordIsValid = await compareHash(user.password, password);
     if (!passwordIsValid) {
       return res.status(400).json({ error: "Invalid password" });

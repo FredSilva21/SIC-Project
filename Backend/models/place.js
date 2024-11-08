@@ -27,6 +27,7 @@ const Place = sequelize.define(
     end: {
       type: DataTypes.DATE,
       allowNull: true,
+      defaultValue: null,
     },
     is_ocupied: {
       type: DataTypes.BOOLEAN,

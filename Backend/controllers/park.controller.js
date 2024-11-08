@@ -38,9 +38,11 @@ exports.createPark = async (req, res) => {
     if (req.file) {
       const image = fs.readFileSync(req.file.path);
       const encodedImage = Buffer.from(image).toString("base64");
-      newPark.image = encodedImage;
+      newPark.image = image;
       fs.unlinkSync(req.file.path);
     }
+
+    await newPark.save();
 
     return res.status(200).json({ success: "Park created", park: newPark });
   } catch (error) {

@@ -17,7 +17,7 @@ export const useUserStore = defineStore("user", {
     async fetchUsers() {
       try {
         const response = await fetch(`${url}/users`);
-        this.users = await response;
+        this.users = await response.json();
         localStorage.setItem("users", JSON.stringify(this.users));
       } catch (error) {
         console.error(error);
@@ -38,7 +38,7 @@ export const useUserStore = defineStore("user", {
 
     async register(user) {
       try {
-        const response = await fetch(`${url}/users`, {
+        const response = await fetch(`${url}/register`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -46,9 +46,7 @@ export const useUserStore = defineStore("user", {
           body: JSON.stringify(user),
         });
         if (response.status === 201) {
-          this.user = await response.user;
-          this.loggedIn = true;
-          localStorage.setItem("user", JSON.stringify(this.user));
+          return true;
         }
       } catch (error) {
         console.error(error);

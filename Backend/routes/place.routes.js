@@ -8,6 +8,6 @@ router
   .post("/parks/:parkId/places", verifyUser, PlaceController.createPlace);
 
 router
-  .get("/parks/:parkId/places/:placeId", verifyUser, PlaceController.getPlace)
-  .patch("/parks/:parkId/places/:placeId", verifyUser, PlaceController.updatePlace);
+  .get("/places/:placeId", verifyUser, PlaceController.getPlace)
+  .patch("/places/:placeId", verifyUser, PlaceController.updatePlace);
 module.exports = router;

@@ -44,7 +44,7 @@ exports.createPlace = async (req, res) => {
     const place = await Place.create({
       id_park: parkId,
     });
-    return res.status(201).json({ success: "Place created", place });
+    return res.status(201).json({ success: "Place created", place:place });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
@@ -66,18 +66,18 @@ exports.getPlace = async (req, res) => {
 };
 
 exports.updatePlace = async (req, res) => {
-  const { parkId,placeId } = req.params;
+  const { placeId } = req.params;
   try {
-    const findPark = await Park.findByPk(parkId);
-
-    if (!findPark) {
-      return res.status(404).json({ error: "Park not found!" });
-    }
-
     const place = await Place.findByPk(placeId);
 
     if (!place) {
       return res.status(404).json({ error: "Place not found!" });
+    }
+
+    const findPark = await Park.findByPk(place.id_park);
+
+    if (!findPark) {
+      return res.status(404).json({ error: "Park not found!" });
     }
 
     if (place.end) {

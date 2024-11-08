@@ -1,27 +1,39 @@
 <template>
-  <div>
-    <h1>Login</h1>
-  </div>
-  <form @submit.prevent="login" >
-    <div>
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" required v-model="email" />
-    </div>
-    <div>
-      <label for="password">Password</label>
-      <input type="password" id="password" v-model="password" />
-    </div>
-    <div>
-      <button type="submit">Login</button>
-    </div>
-    <hr />
-    <div>
+  <v-container
+    class="d-flex justify-center align-center flex-column"
+    style="height: 100vh; width: 50%"
+  >
+    <h1 class="text-center">Login</h1>
+    <v-form @submit.prevent="login">
+      <v-text-field
+        label="Email"
+        v-model="email"
+        type="email"
+        required
+        outlined
+        prepend-icon="mdi-email"
+      ></v-text-field>
+      <v-text-field
+        label="Password"
+        v-model="password"
+        type="password"
+        required
+        outlined
+        prepend-icon="mdi-lock"
+        class="mb-4"
+        dense
+        full-width
+      ></v-text-field>
+      <v-btn class="mt-4" type="submit" color="primary" block>Login</v-btn>
+    </v-form>
+    <v-divider class="my-4"></v-divider>
+    <div class="text-center">
       <p>
         Não tem conta?
         <router-link :to="{ path: 'register' }">Crie uma</router-link>
       </p>
     </div>
-  </form>
+  </v-container>
 </template>
 
 <script>
@@ -35,21 +47,26 @@ export default {
     };
   },
   methods: {
-    login() {
+    async login() {
       try {
-        const login = this.userStore.login({
+        const login = await this.userStore.login({
           email: this.email,
           password: this.password,
         });
-        if (login) {
+        const logId = this.userStore.getLoggedIn;
+        console.log(logId);
+        if (logId===true) {
           this.$router.push({ name: "home" });
         }
       } catch (error) {
         console.error(error);
+        alert(error);
       }
     },
   },
 };
 </script>
 
-<style></style>
+<style scoped>
+/* Adicione estilos adicionais, se necessário */
+</style>

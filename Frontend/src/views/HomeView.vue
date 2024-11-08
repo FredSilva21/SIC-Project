@@ -1,6 +1,12 @@
 <template>
   <Navbar />
-  <ParkingCard v-for="park in parks" :key="park.id" :park="park" />
+  <v-container class="d-flex">
+    <v-row>
+      <v-col cols="12" md="4" v-for="park in parks" :key="park.id">
+        <ParkingCard :park="park" />
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -27,13 +33,13 @@ export default {
     if (Boolean(user) != true) {
       this.$router.push({ name: "login" });
     }else{
-      this.useParkStore.fetchParks(); 
+      this.useParkStore.fetchParks();
     }
   },
 
   computed: {
     parks() {
-      return this.useParkStore.parks;
+      return this.useParkStore.getParks;
     },
   },
 };

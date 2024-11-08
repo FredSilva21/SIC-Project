@@ -1,64 +1,93 @@
 <template>
-    <div>
-        <h1>Register</h1>
-    </div>
-    <form>
-        <div>
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" required>
-        </div>
-        <div>
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required>
-        </div>
-        <div>
-            <label for="password">Password</label>
-            <input type="password" name="password" id="password">
-        </div>
-        <div>
-            <button type="submit">Register</button>
-        </div>
-        <hr>
-        <div>
-            <p>Já tem uma conta? <router-link :to="{path:'login'}">Entre</router-link></p>
-        </div>
-    </form>
+  <v-container class="d-flex justify-center align-center" style="height: 100vh;">
+    <v-card class="pa-4" max-width="800">
+      <h1 class="text-center mb-4">Register</h1>
+      <v-form @submit.prevent="register" class="with-100">
+        <v-text-field
+          label="Name"
+          v-model="name"
+          type="text"
+          required
+          outlined
+          prepend-icon="mdi-account"
+          dense
+          full-width
+          class="mb-4"
+        ></v-text-field>
+        
+        <v-text-field
+          label="Email"
+          v-model="email"
+          type="email"
+          required
+          outlined
+          prepend-icon="mdi-email"
+          dense
+          full-width
+          class="mb-4"
+        ></v-text-field>
+        
+        <v-text-field
+          label="Password"
+          v-model="password"
+          type="password"
+          required
+          outlined
+          prepend-icon="mdi-lock"
+          dense
+          full-width
+          class="mb-4"
+        ></v-text-field>
+        
+        <v-btn type="submit" color="primary" block class="mt-4">Register</v-btn>
+      </v-form>
+
+      <v-divider class="my-4"></v-divider>
+      
+      <div class="text-center">
+        <p>
+          Já tem uma conta?
+          <router-link :to="{ path: 'login' }" class="text-decoration-underline">Entre</router-link>
+        </p>
+      </div>
+    </v-card>
+  </v-container>
 </template>
 
 <script>
-export default {
+import { useUserStore } from "@/stores/userStore";
 
-}
+export default {
+  data() {
+    return {
+      userStore: useUserStore(),
+      name: "",
+      email: "",
+      password: "",
+    };
+  },
+  methods: {
+    async register() {
+      try {
+        const register = await this.userStore.register({
+          name: this.name,
+          email: this.email,
+          password: this.password,
+        });
+        if (register) {
+          this.$router.push({ name: "login" });
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
+  },
+};
 </script>
 
-<style>
-    form {
-        display: flex;
-        flex-direction: column;
-        width: 50%;
-        margin: 0 auto;
-    }
-
-    div {
-        margin-bottom: 1rem;
-    }
-
-    label {
-        font-weight: bold;
-    }
-
-    input {
-        padding: 0.5rem;
-        border-radius: 0.5rem;
-        border: 1px solid #ccc;
-    }
-
-    button {
-        padding: 0.5rem;
-        border-radius: 0.5rem;
-        border: none;
-        background-color: #333;
-        color: white;
-        cursor: pointer;
-    }
+<style scoped>
+/* Estilos adicionais para melhorar a aparência */
+.text-decoration-underline {
+  text-decoration: underline;
+}
 </style>

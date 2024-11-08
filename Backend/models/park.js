@@ -18,11 +18,6 @@ const Park = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    average_rating: {
-      type: DataTypes.FLOAT,
-      allowNull: true,
-      defaultValue: 0,
-    },
     capacity: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -46,7 +41,6 @@ const Park = sequelize.define(
     timestamps: false,
     hooks: {
       beforeCreate: (park) => {
-        // Define o valor de `free_places` igual ao `capacity` ao criar um novo registro
         if (park.free_places === undefined) {
           park.free_places = park.capacity;
         }
