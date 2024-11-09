@@ -35,7 +35,7 @@
       </v-card-text>
 
       <v-card-actions>
-        <v-btn color="primary" @click="payPlace">Ir para Pagamento</v-btn>
+        <v-btn color="primary" @click="payPlace">Fazer Pagamento</v-btn>
         <v-btn color="primary" @click="notifyUser">Notificar</v-btn>
       </v-card-actions>
     </v-card>
@@ -44,11 +44,13 @@
 
 <script>
 import { useParkStore } from "@/stores/parkStore";
+import { useNotStore } from "@/stores/notificationStore";
 
 export default {
   data() {
     return {
       useParkStore: useParkStore(),
+      useNotStore: useNotStore(),
       notificationInterval: "5 minutos",
     };
   },
@@ -87,11 +89,7 @@ export default {
         };
       }
       return this.useParkStore.getPark;
-    },
-
-    notificationMessage() {
-      return this.useParkStore.getNotificationMessage;
-    },
+    }
   },
 
   methods: {
@@ -101,7 +99,7 @@ export default {
 
     payPlace() {
       try {
-        this.useParkStore.payPlace(this.place.id);
+        this.useParkStore.editPlace(this.place,this.park);
         this.$router.push({ name: "home" });
       } catch (error) {
         console.error(error);
@@ -130,7 +128,7 @@ export default {
           break;
       }
       try {
-        this.useParkStore.notifyUser(this.place,this.park.price, this.notificationInterval);
+        this.useNotStore.notifyTime(this.place,this.park.price, this.notificationInterval);
       } catch (error) {
         console.error(error);
       }

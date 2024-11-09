@@ -1,6 +1,7 @@
 import mqttService from "@/services/mqttService";
 import { defineStore } from "pinia";
 import { useNotStore } from "./notificationStore";
+
 const url = "http://localhost:3000";
 
 export const useParkStore = defineStore("park", {
@@ -80,7 +81,7 @@ export const useParkStore = defineStore("park", {
           this.placeId = data.place.id_place;
           const topic = `parks/${park.id_park}/enter`;
           mqttService.subscribe(topic, (message) => {
-            this.park_places = message;
+            return message;
           });
           useNotStore().notifyPlace(park, true);
         }
@@ -89,7 +90,7 @@ export const useParkStore = defineStore("park", {
       }
     },
 
-    async editPlace(place) {
+    async editPlace(place,park) {
       try {
         const token = localStorage.getItem("token");
         const response = await fetch(`${url}/places/${place.id_place}`, {
@@ -105,11 +106,19 @@ export const useParkStore = defineStore("park", {
 
           const topic = `parks/${place.id_park}/exit`;
           mqttService.subscribe(topic, (message) => {
-            this.notificationMessage = message;
+            return message;
           });
 
-          useNotStore().notifyPlace(place, false);
+          mqttService.unsubscribe(`parks/${place.id_park}/enter`, (message) => {
+            return message;
+          });
+          mqttService.unsubscribe(`place/${place.id_place}/notify`, (message) => {
+            return message;
+          });
+
+          useNotStore().notifyPlace(park, false);
         }
+
       } catch (error) {
         console.error(error);
       }

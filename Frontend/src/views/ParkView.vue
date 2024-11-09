@@ -72,14 +72,12 @@ export default {
   methods: {
     enterCar() {
       try {
-        this.parkStore.addPlace(this.park);
-
-        const placeId = this.parkStore.getPlaceId;
-
-        if (placeId != null) {
-          alert('Entrada marcada com sucesso!');
-          this.$router.push({ name: 'place', params: { placeId } });
-        }
+        this.parkStore.addPlace(this.park).then(() => {
+          if(this.parkStore.getPlaceId != null) {
+            alert('Entrada marcada com sucesso!');
+            this.$router.push({ name: 'place', params: { placeId: this.parkStore.getPlaceId } });
+          }
+        });
       } catch (error) {
         console.error(error);
       }

@@ -29,7 +29,7 @@ export const useNotStore = defineStore("notification", {
           topic,
           `Preço atualizado: ${totalPrice.toFixed(2)}`
         );
-      }, 5000);
+      }, interval * 1000 * 60);
     },
 
     notifyPlace(park, boolean) {
@@ -38,15 +38,20 @@ export const useNotStore = defineStore("notification", {
         if (park.free_places > 0) {
           mqttService.publish(
             topic,
-            `O parque ${park.id_park} registou uma nova entrada. Lugares disponíveis: ${park.free_places - 1}`
+            `O parque ${park.name} registou uma nova entrada. Lugares disponíveis: ${Number(park.free_places) - 1}`
           );
+
+          alert(`O parque ${park.name} registou uma nova entrada. Lugares disponíveis: ${Number(park.free_places) - 1}`);
         }
       }else{
+        console.log(park);
         const topic = `parks/${park.id_park}/exit`;
         mqttService.publish(
           topic,
-          `O parque ${park.id_park} registou uma saída. Lugares disponíveis: ${park.free_places + 1}`
+          `O parque ${park.name} registou uma saída. Lugares disponíveis: ${park.free_places + 1}`
         );
+
+        alert(`O parque ${park.name} registou uma saída. Lugares disponíveis: ${Number(park.free_places) + 1}`);
       }
     },
   },
