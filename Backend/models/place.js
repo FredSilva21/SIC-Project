@@ -29,6 +29,11 @@ const Place = sequelize.define(
       allowNull: true,
       defaultValue: null,
     },
+    amount: {
+      type: DataTypes.DECIMAL(5, 2),
+      allowNull: true,
+      defaultValue: null,
+    },
     is_ocupied: {
       type: DataTypes.BOOLEAN,
       allowNull: false,

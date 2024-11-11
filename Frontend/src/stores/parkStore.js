@@ -90,7 +90,7 @@ export const useParkStore = defineStore("park", {
       }
     },
 
-    async editPlace(place,park) {
+    async editPlace(place,park,data) {
       try {
         const token = localStorage.getItem("token");
         const response = await fetch(`${url}/places/${place.id_place}`, {
@@ -99,6 +99,7 @@ export const useParkStore = defineStore("park", {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
+          body: JSON.stringify(data),
         });
         if (response.status === 200) {
           const data = await response.json();

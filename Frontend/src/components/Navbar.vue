@@ -3,9 +3,9 @@
       <v-toolbar-title>MyPark</v-toolbar-title>
 
       <v-spacer></v-spacer>
-
-      <router-link :to="{name:'notification'}">Notifications</router-link>
-
+      <router-link>
+        <v-btn color="white" text> Relatórios </v-btn>
+      </router-link>
       <v-btn color="white" @click="logout" outlined> Logout </v-btn>
     </v-sheet>
 </template>

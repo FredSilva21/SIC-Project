@@ -76,6 +76,7 @@ export default {
       cardName: "",
       cardExpiration: "",
       cardCVV: "",
+      totalPrice: 0,
     };
   },
 
@@ -96,15 +97,26 @@ export default {
     amount() {
       const durationHours =
         Math.abs(new Date(this.place.end) - new Date(this.place.start)) / 36e5;
-      const totalPrice = durationHours * Number(this.park.price);
-      return totalPrice.toFixed(2);
+      this.totalPrice = durationHours * this.park.price;
+      return this.totalPrice.toFixed(2);
     },
 
     pay() {
-      if (this.cardNumber === "" || this.cardName === "" || this.cardExpiration === "" || this.cardCVV === "") {
+      if (
+        this.cardNumber === "" ||
+        this.cardName === "" ||
+        this.cardExpiration === "" ||
+        this.cardCVV === ""
+      ) {
         alert("Por favor, preencha todos os campos");
       } else {
-        this.$emit("pay")
+        this.$emit("pay", {
+            cardNumber: this.cardNumber,
+            cardName: this.cardName,
+            cardExpiration: this.cardExpiration,
+            cardCVV: this.cardCVV,
+            totalPrice: this.totalPrice.toFixed(2),
+        });
       }
     },
   },

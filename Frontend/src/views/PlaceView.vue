@@ -122,10 +122,11 @@ export default {
       }
     },
 
-    payPlace() {
+    payPlace(data) {
       try {
-        this.useParkStore.editPlace(this.place,this.park);
-        this.$router.push({ name: "home" });
+        console.log(data)
+        this.useParkStore.editPlace(this.place,this.park,data);
+        this.$router.push({ path: "/" });
       } catch (error) {
         console.error(error);
       }

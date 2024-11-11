@@ -9,5 +9,5 @@ router
 
 router
   .get("/places/:placeId", verifyUser, PlaceController.getPlace)
-  .patch("/places/:placeId", verifyUser, PlaceController.updatePlace);
+  .patch("/places/:placeId", verifyUser,PlaceController.updatePlace);
 module.exports = router;

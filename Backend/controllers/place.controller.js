@@ -1,4 +1,4 @@
-const { User, Place, Park } = require("../models/index");
+const { User, Place, Park,Payment } = require("../models/index");
 
 exports.getAllPlaces = async (req, res) => {
   const { parkId } = req.params;
@@ -86,13 +86,55 @@ exports.updatePlace = async (req, res) => {
 
     place.end = new Date();
     place.is_ocupied = false;
+    place.amount = req.body.totalPrice;
     await place.save();
 
     findPark.free_places++;
     findPark.save();
 
+    await Payment.create({
+      id_place: placeId,
+      id_park: place.id_park,
+      id_user: res.locals.userId,
+      amount: req.body.totalPrice,
+      cardNumber: req.body.cardNumber,
+      cardName: req.body.cardName,
+      cardExpiration: req.body.cardExpiration,
+      cardCVV: req.body.cardCVV,
+    });
+
     return res.status(200).json({ success: "Place updated", place });
   } catch (error) {
+    console.log(error)
     return res.status(500).json({ error: error.message });
   }
 };
+
+// exports.updateReport = async (req, res) => {
+//   const { reportId } = req.params;
+//   try {
+//     const report = await Report.findByPk(reportId);
+
+//     if (!report) {
+//       return res.status(404).json({ error: "Report not found!" });
+//     }
+
+//     const findPark = await Park.findByPk(report.id_park);
+
+//     if (!findPark) {
+//       return res.status(404).json({ error: "Park not found!" });
+//     }
+
+//     if (report.type === "revenue") {
+//       findPark.revenue += report.revenue;
+//     } else if (report.type === "average_occupation") {
+//       findPark.average_occupation += report.average_occupation;
+//     }
+
+//     await findPark.save();
+
+//     return res.status(200).json({ success: "Report updated", report });
+//   } catch (error) {
+//     return res.status(500).json({ error: error.message });
+//   }
+// }

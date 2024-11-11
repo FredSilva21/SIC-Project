@@ -44,7 +44,6 @@ export const useNotStore = defineStore("notification", {
           alert(`O parque ${park.name} registou uma nova entrada. Lugares disponíveis: ${Number(park.free_places) - 1}`);
         }
       }else{
-        console.log(park);
         const topic = `parks/${park.id_park}/exit`;
         mqttService.publish(
           topic,
