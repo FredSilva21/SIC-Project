@@ -1,5 +1,13 @@
 <template>
-  <v-container class="place" fluid>
+  <v-container v-if="showPaymentModal">
+    <PaymentModal
+      :place="place"
+      :park="park"
+      @close="showPaymentModal = false, this.place.end=null"
+      @pay="payPlace"
+    ></PaymentModal>
+  </v-container>
+  <v-container class="place" fluid v-else>
     <v-card class="mx-auto my-5" max-width="600">
       <v-card-title>
         <h1 class="text-h4">Detalhes do Lugar</h1>
@@ -35,7 +43,7 @@
       </v-card-text>
 
       <v-card-actions>
-        <v-btn color="primary" @click="payPlace">Fazer Pagamento</v-btn>
+        <v-btn color="primary" @click="toggleModal">Fazer Pagamento</v-btn>
         <v-btn color="primary" @click="notifyUser">Notificar</v-btn>
       </v-card-actions>
     </v-card>
@@ -43,15 +51,20 @@
 </template>
 
 <script>
+import PaymentModal from "@/components/PaymentModal.vue";
 import { useParkStore } from "@/stores/parkStore";
 import { useNotStore } from "@/stores/notificationStore";
 
 export default {
-  data() {
+  components: {
+    PaymentModal
+  },
+  data(){
     return {
       useParkStore: useParkStore(),
       useNotStore: useNotStore(),
       notificationInterval: "5 minutos",
+      showPaymentModal: false,
     };
   },
 
@@ -95,6 +108,18 @@ export default {
   methods: {
     formatDate(date) {
       return new Date(date).toLocaleTimeString();
+    },
+
+    toggleModal() {
+      this.place.end = new Date().toISOString();;
+      this.showPaymentModal = !this.showPaymentModal;
+
+      if(this.showPaymentModal){
+        setTimeout(() => {
+          this.showPaymentModal = false;
+          this.place.end = null;
+        }, 5 * 60 * 1000);
+      }
     },
 
     payPlace() {

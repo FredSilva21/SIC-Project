@@ -105,16 +105,17 @@ export const useParkStore = defineStore("park", {
           this.place = data.place;
 
           const topic = `parks/${place.id_park}/exit`;
+
+          mqttService.publish(`place/${place.id_place}/notify`, "", { retain: true });
           mqttService.subscribe(topic, (message) => {
             return message;
           });
-
           mqttService.unsubscribe(`parks/${place.id_park}/enter`, (message) => {
             return message;
           });
           mqttService.unsubscribe(`place/${place.id_place}/notify`, (message) => {
             return message;
-          });
+          })
 
           useNotStore().notifyPlace(park, false);
         }
