@@ -57,7 +57,6 @@ export default {
           password: this.password,
         });
         const logId = this.userStore.getLoggedIn;
-        console.log(logId);
         if (logId===true) {
           this.$router.push({ name: "home" });
         }

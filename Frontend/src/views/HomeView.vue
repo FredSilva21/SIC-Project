@@ -35,6 +35,10 @@ export default {
     }else{
       this.useParkStore.fetchParks();
     }
+    const type = localStorage.getItem("type");
+    if (Boolean(type) == true) {
+      this.userStore.adminSubscribe()
+    }
   },
 
   computed: {

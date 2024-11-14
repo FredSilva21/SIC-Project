@@ -60,7 +60,7 @@ exports.login = async (req, res) => {
     const token = await SignToken(user);
     return res
       .status(200)
-      .json({ success: "Login successful", token: token, user_id: user.id_user });
+      .json({ success: "Login successful", token: token, user_id: user.id_user, type: user.type });
   } catch (error) {
     res.status(500).send({
       message: "Something went wrong. Plese try again later",

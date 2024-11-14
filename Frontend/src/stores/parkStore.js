@@ -79,10 +79,14 @@ export const useParkStore = defineStore("park", {
         if (response.status === 201) {
           const data = await response.json();
           this.placeId = data.place.id_place;
-          const topic = `parks/${park.id_park}/enter`;
-          mqttService.subscribe(topic, (message) => {
-            return message;
-          });
+
+          if (Boolean(localStorage.getItem("type")) === false) {
+            const topic = `parks/${park.id_park}/enter`;
+            mqttService.subscribe(topic, (message) => {
+              return message;
+            });
+            useNotStore().notifyPlace(park, true);
+          }
           useNotStore().notifyPlace(park, true);
         }
       } catch (error) {
@@ -90,7 +94,7 @@ export const useParkStore = defineStore("park", {
       }
     },
 
-    async editPlace(place,park,data) {
+    async editPlace(place, park, data) {
       try {
         const token = localStorage.getItem("token");
         const response = await fetch(`${url}/places/${place.id_place}`, {
@@ -107,20 +111,24 @@ export const useParkStore = defineStore("park", {
 
           const topic = `parks/${place.id_park}/exit`;
 
-          mqttService.publish(`place/${place.id_place}/notify`, "", { retain: true });
+          mqttService.publish(`place/${place.id_place}/notify`, "", {
+            retain: true,
+          });
           mqttService.subscribe(topic, (message) => {
             return message;
           });
           mqttService.unsubscribe(`parks/${place.id_park}/enter`, (message) => {
             return message;
           });
-          mqttService.unsubscribe(`place/${place.id_place}/notify`, (message) => {
-            return message;
-          })
+          mqttService.unsubscribe(
+            `place/${place.id_place}/notify`,
+            (message) => {
+              return message;
+            }
+          );
 
           useNotStore().notifyPlace(park, false);
         }
-
       } catch (error) {
         console.error(error);
       }

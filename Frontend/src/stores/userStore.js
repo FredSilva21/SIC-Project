@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
-
+import { useParkStore } from "./parkStore";
+import mqttService from "@/services/mqttService";
 const url = "http://localhost:3000";
 
 export const useUserStore = defineStore("user", {
@@ -71,6 +72,26 @@ export const useUserStore = defineStore("user", {
           localStorage.setItem("token", data.token);
           localStorage.setItem("user_Id", data.user_id);
           localStorage.setItem("loggedIn", this.loggedIn);
+          localStorage.setItem("type", JSON.stringify(data.type));
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    adminSubscribe() {
+      try {
+        useParkStore().fetchParks();
+        const parks = useParkStore().getParks;
+        for (const park of parks) {
+          const topicEnter = `parks/${park.id_park}/enter`;
+          mqttService.subscribe(topicEnter, (message) => {
+            return message;
+          });
+          const topicExit = `parks/${park.id_park}/exit`;
+          mqttService.subscribe(topicExit, (message) => {
+            return message;
+          });
         }
       } catch (error) {
         console.error(error);
