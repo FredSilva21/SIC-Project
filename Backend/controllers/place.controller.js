@@ -40,6 +40,14 @@ exports.createPlace = async (req, res) => {
       return res.status(400).json({ error: "No free places in the park" });
     }
 
+    const findUserPlaces = await Place.findOne({
+      where: { id_park: parkId, is_ocupied: true },
+    });
+
+    if (findUserPlaces) {
+      return res.status(400).json({ error: "User already has a place" });
+    }
+
     const place = await Place.create({
       id_park: parkId,
     });

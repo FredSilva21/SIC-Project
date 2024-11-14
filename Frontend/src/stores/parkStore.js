@@ -76,6 +76,7 @@ export const useParkStore = defineStore("park", {
             Authorization: `Bearer ${token}`,
           },
         });
+        
         if (response.status === 201) {
           const data = await response.json();
           this.placeId = data.place.id_place;
