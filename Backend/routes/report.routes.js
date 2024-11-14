@@ -4,9 +4,9 @@ const ReportController = require("../controllers/report.controller");
 const { verifyUser, verifyAdmin } = require("../middleware/jwt");
 
 router
-  .get("/parks/:parkId/reports", verifyUser, ReportController.getAllReports)
+  .get("/parks/:parkId/reports", verifyUser,verifyAdmin, ReportController.getAllReports)
   .post("/parks/:parkId/reports", verifyUser, ReportController.createReport);
 
 router.get("/parks/:parkId/reports/:reportId",verifyUser,ReportController.getReportId)
-.delete("/parks/:parkId/reports/:reportId",verifyUser,ReportController.deleteReport)
+.delete("/parks/:parkId/reports/:reportId",verifyUser,verifyAdmin,ReportController.deleteReport)
 module.exports = router;

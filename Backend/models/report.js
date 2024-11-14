@@ -1,6 +1,6 @@
 const sequelize = require("../sequelizeconnection");
 const { Sequelize, DataTypes } = require("sequelize");
-const { Park } = require("./index")
+const { Park } = require("./index");
 const Report = sequelize.define(
   "Report",
   {
@@ -13,26 +13,26 @@ const Report = sequelize.define(
     id_park: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      references:{
+      references: {
         model: Park,
         key: "id_park",
-      }
+      },
     },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    average_occupation: {
+    daily_occupation: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
     revenue: {
-      type: DataTypes.DECIMAL(5, 2),
+      type: DataTypes.FLOAT(2),
       allowNull: false,
     },
-    type: {
-      type: DataTypes.ENUM,
-      values: ["Diary", "Weekly", "Monthly"],
+    date: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
   },
   { tableName: "Report", timestamps: false }

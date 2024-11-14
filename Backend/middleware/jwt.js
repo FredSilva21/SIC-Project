@@ -79,11 +79,11 @@ module.exports = {
     try {
       const payload = jwt.decode(bearer, secret);
 
-      const user = await User.findByPk(payload.id);
+      const user = await User.findByPk(payload.id.id_user);
 
       if (user != null) {
         if (user.type == true) {
-          res.locals.userId = payload.id;
+          res.locals.userId = payload.id.id_user;
           next();
         } else {
           res.status(403).send({ message: "User is not an admin" });

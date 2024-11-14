@@ -1,4 +1,4 @@
-const { User, Place, Park,Payment } = require("../models/index");
+const { User, Place, Park, Payment, Report } = require("../models/index");
 
 exports.getAllPlaces = async (req, res) => {
   const { parkId } = req.params;
@@ -11,7 +11,6 @@ exports.getAllPlaces = async (req, res) => {
 
     const places = await Place.findAll({
       where: { id_park: parkId },
-
     });
 
     return res
@@ -40,11 +39,11 @@ exports.createPlace = async (req, res) => {
     if (findPark.free_places === 0) {
       return res.status(400).json({ error: "No free places in the park" });
     }
-    
+
     const place = await Place.create({
       id_park: parkId,
     });
-    return res.status(201).json({ success: "Place created", place:place });
+    return res.status(201).json({ success: "Place created", place: place });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
@@ -103,38 +102,35 @@ exports.updatePlace = async (req, res) => {
       cardCVV: req.body.cardCVV,
     });
 
+    const formatDate = (date) => {
+      const day = date.getDate();
+      const month = date.getMonth() + 1;
+      const year = date.getFullYear();
+      return `${day}/${month}/${year}`;
+    };
+
+    const report = await Report.findOne({
+      where: { id_park: place.id_park, date: formatDate(place.start) },
+    });
+    console.log(report)
+
+    if (!report) {
+      await Report.create({
+        name: `Report ${formatDate(place.start)}`,
+        daily_occupation: 1,
+        revenue: req.body.totalPrice,
+        id_park: place.id_park,
+        date: formatDate(place.start),
+      });
+    } else {
+      report.daily_occupation++;
+      report.revenue += Number(req.body.totalPrice);
+      await report.save();
+    }
+
     return res.status(200).json({ success: "Place updated", place });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     return res.status(500).json({ error: error.message });
   }
 };
-
-// exports.updateReport = async (req, res) => {
-//   const { reportId } = req.params;
-//   try {
-//     const report = await Report.findByPk(reportId);
-
-//     if (!report) {
-//       return res.status(404).json({ error: "Report not found!" });
-//     }
-
-//     const findPark = await Park.findByPk(report.id_park);
-
-//     if (!findPark) {
-//       return res.status(404).json({ error: "Park not found!" });
-//     }
-
-//     if (report.type === "revenue") {
-//       findPark.revenue += report.revenue;
-//     } else if (report.type === "average_occupation") {
-//       findPark.average_occupation += report.average_occupation;
-//     }
-
-//     await findPark.save();
-
-//     return res.status(200).json({ success: "Report updated", report });
-//   } catch (error) {
-//     return res.status(500).json({ error: error.message });
-//   }
-// }

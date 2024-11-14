@@ -5,6 +5,7 @@ import LoginView from '@/views/LoginView.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import PlaceView from '@/views/PlaceView.vue'
 import NotificationView from '@/views/NotificationView.vue'
+import ReportsView from '@/views/ReportsView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -38,6 +39,11 @@ const router = createRouter({
       path:"/notifications",
       name:"notification",
       component:NotificationView
+    },
+    {
+      path:"/reports/:parkId",
+      name:"reports",
+      component:ReportsView
     }
   ]
 })

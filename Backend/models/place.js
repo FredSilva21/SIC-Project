@@ -30,7 +30,7 @@ const Place = sequelize.define(
       defaultValue: null,
     },
     amount: {
-      type: DataTypes.DECIMAL(5, 2),
+      type: DataTypes.FLOAT(2),
       allowNull: true,
       defaultValue: null,
     },

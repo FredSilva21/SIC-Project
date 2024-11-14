@@ -30,7 +30,7 @@ exports.createReport = async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
-};
+};1
 
 exports.getReportId = async (req, res) => {
   try {
@@ -57,7 +57,7 @@ exports.deleteReport = async (req, res) => {
       return res.status(404).json({ error: "Report not found" });
     }
     await report.destroy();
-    res.status(200).json({ success: "Report deleted" });
+    res.status(204).json({ success: "Report deleted" });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

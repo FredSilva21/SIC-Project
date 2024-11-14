@@ -32,18 +32,19 @@
 
       <v-card-actions>
         <v-btn color="primary" @click="enterCar">Marcar Entrada</v-btn>
+        <v-btn color="secondary" @click="seeReports">Ver Relatórios</v-btn>
       </v-card-actions>
     </v-card>
   </v-container>
 </template>
 
 <script>
-import { useParkStore } from '@/stores/parkStore';
+import { useParkStore } from "@/stores/parkStore";
 
 export default {
   data() {
     return {
-      parkStore: useParkStore()
+      parkStore: useParkStore(),
     };
   },
 
@@ -54,35 +55,45 @@ export default {
 
   computed: {
     park() {
-      const park= this.parkStore.getPark;
+      const park = this.parkStore.getPark;
       if (park == null) {
         return {
-          name: 'Nome do Parque',
-          location: 'Localização do Parque',
+          name: "Nome do Parque",
+          location: "Localização do Parque",
           price: 0,
           capacity: 0,
           free_places: 0,
-          average_rating: 0
+          average_rating: 0,
         };
       }
       return this.parkStore.getPark;
-    }
+    },
   },
 
   methods: {
     enterCar() {
       try {
         this.parkStore.addPlace(this.park).then(() => {
-          if(this.parkStore.getPlaceId != null) {
-            alert('Entrada marcada com sucesso!');
-            this.$router.push({ name: 'place', params: { placeId: this.parkStore.getPlaceId } });
+          if (this.parkStore.getPlaceId != null) {
+            alert("Entrada marcada com sucesso!");
+            this.$router.push({
+              name: "place",
+              params: { placeId: this.parkStore.getPlaceId },
+            });
           }
         });
       } catch (error) {
         console.error(error);
       }
-    }
-  }
+    },
+
+    seeReports() {
+      this.$router.push({
+        name: "reports",
+        params: { parkId: this.park.id_park },
+      });
+    },
+  },
 };
 </script>
 

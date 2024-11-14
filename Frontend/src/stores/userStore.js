@@ -7,11 +7,13 @@ export const useUserStore = defineStore("user", {
     users: [],
     user_id: null,
     loggedIn: false,
+    user: null,
   }),
   getters: {
     getUsers: (state) => state.users,
     getUser: (state) => state.user_id,
     getLoggedIn: (state) => state.loggedIn,
+    getUserData: (state) => state.user,
   },
   actions: {
     async fetchUsers() {
@@ -28,8 +30,8 @@ export const useUserStore = defineStore("user", {
       try {
         const response = await fetch(`${url}/users/${id}`);
         if (response.status === 200) {
-          this.user = await response.result;
-          localStorage.setItem("user", JSON.stringify(this.user));
+          const data = await response.json();
+          this.user = data.result;
         }
       } catch (error) {
         console.error(error);
