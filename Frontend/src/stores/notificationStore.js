@@ -29,7 +29,7 @@ export const useNotStore = defineStore("notification", {
           topic,
           `Preço atualizado: ${totalPrice.toFixed(2)}`
         );
-      },5000);
+      },interval);
     },
 
     notifyPlace(park, boolean) {
