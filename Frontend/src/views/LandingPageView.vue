@@ -2,7 +2,7 @@
     <div>
         <nav>
             <div class="container">
-                <h3>MyClinic</h3>
+                <h3>MyPark</h3>
                     
                 <ul id="nav__items">
                     <li><a href="/login" class="btn login-btn" ><i class='bx bxl-whatsapp' ></i>Login/Registo</a></li>

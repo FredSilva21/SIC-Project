@@ -1,11 +1,11 @@
 <template>
   <v-container class="d-flex justify-center align-center fill-height login-card">
     <v-card class="pa-4" max-width="800">
-      <h1 class="mb-4 text-center">Register</h1>
+      <h1 class="mb-4 text-center">Registo</h1>
       <v-form @submit.prevent="register" class="with-100">
         <v-row class="mb-2" justify="center"> 
           <v-text-field
-            label="Name"
+            label="Nome"
             v-model="name"
             type="text"
             required
@@ -47,7 +47,7 @@
 
         <v-row justify="center">
           <v-col cols="auto">
-            <v-btn class="custom-btn" type="submit" color="primary">Register</v-btn>
+            <v-btn class="custom-btn" type="submit" color="primary">Registar</v-btn>
           </v-col>
         </v-row>
         
@@ -57,7 +57,7 @@
       
       <div class="text-center">
         <p>
-          Already have an account?
+          Já tem conta?
           <router-link :to="{ path: 'login' }" class="text-decoration-underline">Login</router-link>
         </p>
       </div>
@@ -103,7 +103,6 @@ export default {
 
 .login-card {
   position: absolute;
-  left: 10%;
 }
 .fill-height {
   height: 100vh;

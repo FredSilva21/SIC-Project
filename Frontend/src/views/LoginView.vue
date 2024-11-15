@@ -38,8 +38,8 @@
       <v-divider class="my-4"></v-divider>
       <div class="text-center">
         <p>
-          Don't have an account?
-          <router-link :to="{ path: 'register' }">Register</router-link>
+          Não tem conta?
+          <router-link :to="{ path: 'register' }">Registar</router-link>
         </p>
       </div>
     </v-card>
@@ -79,7 +79,6 @@ export default {
 <style scoped>
 .login-card {
   position: absolute;
-  left: 10%;
 }
 .fill-height {
   height: 100vh;
