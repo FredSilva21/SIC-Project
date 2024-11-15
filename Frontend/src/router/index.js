@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import LandingPageView from '@/views/LandingPageView.vue'
 import HomeView from '../views/HomeView.vue'
 import ParkView from '../views/ParkView.vue'
 import LoginView from '@/views/LoginView.vue'
@@ -12,13 +13,24 @@ const router = createRouter({
   routes: [
     {
       path: '/',
+      name: 'landingPage',
+      component: LandingPageView,
+    },
+    {
+      path: '/home',
       name: 'home',
-      component: HomeView
+      component: HomeView,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/parks/:parkId',
       name: 'park',
-      component: ParkView
+      component: ParkView,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/login',
@@ -33,19 +45,36 @@ const router = createRouter({
     {
       path:"/places/:placeId",
       name:"place",
-      component:PlaceView
+      component:PlaceView,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path:"/notifications",
       name:"notification",
-      component:NotificationView
+      component:NotificationView,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path:"/reports/:parkId",
       name:"reports",
-      component:ReportsView
+      component:ReportsView,
+      meta: {
+        requiresAuth: true
+      }
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiresAuth && localStorage.getItem("loggedIn") !== "true") {
+    next("/login");
+  } else {
+    next();
+  }
+});
 
 export default router
