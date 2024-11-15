@@ -1,4 +1,5 @@
 import mqttService from "@/services/mqttService";
+import Swal from 'sweetalert2'
 import { defineStore } from "pinia";
 const url = "http://localhost:3000";
 
@@ -27,9 +28,17 @@ export const useNotStore = defineStore("notification", {
 
         mqttService.publish(
           topic,
-          `Preço atualizado: ${totalPrice.toFixed(2)}`
+          `Preço atualizado: ${totalPrice.toFixed(2)} €`
         );
-      },interval * 1000 * 60);
+        Swal.fire({
+          position: "top-end",
+          text: `Preço atualizado: ${totalPrice.toFixed(2)}`,
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          width: 500,
+        });
+      },interval * 1000);
     },
 
     notifyPlace(park, boolean) {
@@ -40,17 +49,26 @@ export const useNotStore = defineStore("notification", {
             topic,
             `O parque ${park.name} registou uma nova entrada. Lugares disponíveis: ${Number(park.free_places) - 1}`
           );
-
-          alert(`O parque ${park.name} registou uma nova entrada. Lugares disponíveis: ${Number(park.free_places) - 1}`);
+          Swal.fire({
+            position: "top-end",
+            text: `O parque ${park.name} registou uma nova entrada. Lugares disponíveis: ${Number(park.free_places) - 1}`,
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            width: 500,
+          });
         }
-      }else{
+      } else {
         const topic = `parks/${park.id_park}/exit`;
         mqttService.publish(
           topic,
           `O parque ${park.name} registou uma saída. Lugares disponíveis: ${park.free_places + 1}`
         );
-
-        alert(`O parque ${park.name} registou uma saída. Lugares disponíveis: ${Number(park.free_places) + 1}`);
+        Swal.fire({
+          title: "Sucesso!",
+          text: `O parque ${park.name} registou uma saída. Lugares disponíveis: ${Number(park.free_places) + 1}`,
+          icon: "success"
+        });
       }
     },
   },

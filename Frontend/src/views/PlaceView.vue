@@ -126,7 +126,7 @@ export default {
       try {
         console.log(data)
         this.useParkStore.editPlace(this.place,this.park,data);
-        this.$router.push({ path: "/" });
+        this.$router.push({ path: "/home" });
       } catch (error) {
         console.error(error);
       }

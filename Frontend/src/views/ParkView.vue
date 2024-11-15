@@ -40,6 +40,7 @@
 
 <script>
 import { useParkStore } from "@/stores/parkStore";
+import Swal from 'sweetalert2'
 
 export default {
   data() {
@@ -75,7 +76,6 @@ export default {
       try {
         this.parkStore.addPlace(this.park).then(() => {
           if (this.parkStore.getPlaceId != null) {
-            alert("Entrada marcada com sucesso!");
             this.$router.push({
               name: "place",
               params: { placeId: this.parkStore.getPlaceId },
