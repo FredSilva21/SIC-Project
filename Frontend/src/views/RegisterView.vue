@@ -1,53 +1,64 @@
 <template>
-  <v-container class="d-flex justify-center align-center" style="height: 100vh;">
+  <v-container class="d-flex justify-center align-center fill-height login-card">
     <v-card class="pa-4" max-width="800">
-      <h1 class="text-center mb-4">Register</h1>
+      <h1 class="mb-4 text-center">Register</h1>
       <v-form @submit.prevent="register" class="with-100">
-        <v-text-field
-          label="Name"
-          v-model="name"
-          type="text"
-          required
-          outlined
-          prepend-icon="mdi-account"
-          dense
-          full-width
-          class="mb-4"
-        ></v-text-field>
+        <v-row class="mb-2" justify="center"> 
+          <v-text-field
+            label="Name"
+            v-model="name"
+            type="text"
+            required
+            outlined
+            prepend-icon="mdi-account"
+            dense
+            full-width
+            class="input-field"
+          ></v-text-field>
+        </v-row>
+      
+        <v-row class="mb-2" justify="center"> 
+          <v-text-field
+            label="Email"
+            v-model="email"
+            type="email"
+            required
+            outlined
+            prepend-icon="mdi-email"
+            dense
+            full-width
+            class="input-field"
+          ></v-text-field>
+        </v-row>
         
-        <v-text-field
-          label="Email"
-          v-model="email"
-          type="email"
-          required
-          outlined
-          prepend-icon="mdi-email"
-          dense
-          full-width
-          class="mb-4"
-        ></v-text-field>
+        <v-row class="mb-2" justify="center"> 
+          <v-text-field
+            label="Password"
+            v-model="password"
+            type="password"
+            required
+            outlined
+            prepend-icon="mdi-lock"
+            dense
+            full-width
+            class="input-field"
+          ></v-text-field>
+        </v-row>
+
+        <v-row justify="center">
+          <v-col cols="auto">
+            <v-btn class="custom-btn" type="submit" color="primary">Register</v-btn>
+          </v-col>
+        </v-row>
         
-        <v-text-field
-          label="Password"
-          v-model="password"
-          type="password"
-          required
-          outlined
-          prepend-icon="mdi-lock"
-          dense
-          full-width
-          class="mb-4"
-        ></v-text-field>
-        
-        <v-btn type="submit" color="primary" block class="mt-4">Register</v-btn>
       </v-form>
 
       <v-divider class="my-4"></v-divider>
       
       <div class="text-center">
         <p>
-          Já tem uma conta?
-          <router-link :to="{ path: 'login' }" class="text-decoration-underline">Entre</router-link>
+          Already have an account?
+          <router-link :to="{ path: 'login' }" class="text-decoration-underline">Login</router-link>
         </p>
       </div>
     </v-card>
@@ -88,5 +99,22 @@ export default {
 <style scoped>
 .text-decoration-underline {
   text-decoration: underline;
+}
+
+.login-card {
+  position: absolute;
+  left: 10%;
+}
+.fill-height {
+  height: 100vh;
+}
+.input-field {
+  position: relative;
+  width: 320px;
+  left: -5%
+}
+.custom-btn {
+  width: 200px;
+  font-size: 14px;
 }
 </style>
