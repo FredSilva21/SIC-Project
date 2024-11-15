@@ -20,7 +20,6 @@
                         <p>Oferecemos serviços práticos e confiáveis para a gestão do seu estacionamento.</p>
                     </div>
                     <div class="header__image">
-                        <img src="https://res.cloudinary.com/djcedpyhp/image/upload/v1718914926/myclinic_ygocnq.webp" alt="Header Image">
                     </div>
                 </div>
             </header>
