@@ -1,12 +1,16 @@
 <template>
-  <Navbar />
-  <v-container class="d-flex">
-    <v-row>
-      <v-col cols="12" md="4" v-for="park in parks" :key="park.id">
-        <ParkingCard :park="park" />
-      </v-col>
-    </v-row>
-  </v-container>
+  <div>
+    <Navbar />
+    <div class="content-container">
+      <v-container class="d-flex">
+        <v-row>
+          <v-col cols="12" md="4" v-for="park in parks" :key="park.id">
+            <ParkingCard :park="park" />
+          </v-col>
+        </v-row>
+      </v-container>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -32,12 +36,12 @@ export default {
     const user = localStorage.getItem("loggedIn");
     if (Boolean(user) != true) {
       this.$router.push({ name: "login" });
-    }else{
+    } else {
       this.useParkStore.fetchParks();
     }
     const type = localStorage.getItem("type");
     if (Boolean(type) == true) {
-      this.userStore.adminSubscribe()
+      this.userStore.adminSubscribe();
     }
   },
 
@@ -48,3 +52,9 @@ export default {
   },
 };
 </script>
+
+<style>
+.content-container {
+  padding-top: 10rem;
+}
+</style>
