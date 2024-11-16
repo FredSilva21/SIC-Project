@@ -3,7 +3,9 @@
     <PaymentModal
       :place="place"
       :park="park"
-      @close="showPaymentModal = false, this.place.end=null"
+      @close="
+        (showPaymentModal = false), (this.place.end = null), (showNot = true), console.log(notificationInterval)
+      "
       @pay="payPlace"
     ></PaymentModal>
   </v-container>
@@ -57,14 +59,16 @@ import { useNotStore } from "@/stores/notificationStore";
 
 export default {
   components: {
-    PaymentModal
+    PaymentModal,
   },
-  data(){
+  data() {
     return {
       useParkStore: useParkStore(),
       useNotStore: useNotStore(),
       notificationInterval: "5 minutos",
       showPaymentModal: false,
+      showNot: false,
+      interval: null,
     };
   },
 
@@ -102,7 +106,7 @@ export default {
         };
       }
       return this.useParkStore.getPark;
-    }
+    },
   },
 
   methods: {
@@ -111,12 +115,15 @@ export default {
     },
 
     toggleModal() {
-      this.place.end = new Date().toISOString();;
+      this.place.end = new Date().toISOString();
       this.showPaymentModal = !this.showPaymentModal;
-
-      if(this.showPaymentModal){
+      this.showNot = false;
+      console.log(this.showNot);
+      if (this.showPaymentModal) {
+        clearInterval(this.interval);
         setTimeout(() => {
           this.showPaymentModal = false;
+          this.showNot = true;
           this.place.end = null;
         }, 5 * 60 * 1000);
       }
@@ -124,8 +131,7 @@ export default {
 
     payPlace(data) {
       try {
-        console.log(data)
-        this.useParkStore.editPlace(this.place,this.park,data);
+        this.useParkStore.editPlace(this.place, this.park, data);
         this.$router.push({ path: "/home" });
       } catch (error) {
         console.error(error);
@@ -154,14 +160,24 @@ export default {
           break;
       }
       try {
-        this.useNotStore.notifyTime(this.place,this.park.price, this.notificationInterval);
+        this.showNot = true;
+        this.interval = setInterval(() => {
+          if (!this.showNot) {
+            clearInterval(interval);
+            return;
+          }
+          this.useNotStore.notifyTime(
+            this.place,
+            this.park.price,
+            this.notificationInterval
+          );
+        }, this.notificationInterval * 1000);
       } catch (error) {
         console.error(error);
       }
     },
   },
 };
-      
 </script>
 
 <style scoped>

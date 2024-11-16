@@ -1,5 +1,5 @@
 import mqttService from "@/services/mqttService";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 import { defineStore } from "pinia";
 const url = "http://localhost:3000";
 
@@ -7,38 +7,42 @@ export const useNotStore = defineStore("notification", {
   state: () => ({
     userNotifications: [],
     notificationMessage: "",
+    showNot: false,
   }),
   getters: {
     getNotificationMessage: (state) => state.notificationMessage,
+    getShowNot: (state) => state.showNot,
   },
   actions: {
+    changeNot() {
+      this.showNot = !this.showNot;
+    },
+
     notifyTime(place, price, interval) {
       const topic = `place/${place.id_place}/notify`;
       mqttService.subscribe(topic, (message) => {
         return message;
       });
 
-      setInterval(() => {
-        const start = new Date(place.start);
-        const now = new Date();
+      const start = new Date(place.start);
+      const now = new Date();
 
-        const diffInHours = Math.abs(now - start) / 36e5;
+      const diffInHours = Math.abs(now - start) / 36e5;
 
-        const totalPrice = diffInHours * Number(price);
+      const totalPrice = diffInHours * Number(price);
 
-        mqttService.publish(
-          topic,
-          `Preço atualizado: ${totalPrice.toFixed(2)} €`
-        );
-        Swal.fire({
-          position: "top-end",
-          text: `Preço atualizado: ${totalPrice.toFixed(2)}`,
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true,
-          width: 500,
-        });
-      },interval * 1000);
+      mqttService.publish(
+        topic,
+        `Preço atualizado: ${totalPrice.toFixed(2)} €`
+      );
+      Swal.fire({
+        position: "top-end",
+        text: `Preço atualizado: ${totalPrice.toFixed(2)}`,
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        width: 500,
+      });
     },
 
     notifyPlace(park, boolean) {
@@ -47,11 +51,19 @@ export const useNotStore = defineStore("notification", {
         if (park.free_places > 0) {
           mqttService.publish(
             topic,
-            `O parque ${park.name} registou uma nova entrada. Lugares disponíveis: ${Number(park.free_places) - 1}`
+            `O parque ${
+              park.name
+            } registou uma nova entrada. Lugares disponíveis: ${
+              Number(park.free_places) - 1
+            }`
           );
           Swal.fire({
             position: "top-end",
-            text: `O parque ${park.name} registou uma nova entrada. Lugares disponíveis: ${Number(park.free_places) - 1}`,
+            text: `O parque ${
+              park.name
+            } registou uma nova entrada. Lugares disponíveis: ${
+              Number(park.free_places) - 1
+            }`,
             showConfirmButton: false,
             timer: 3000,
             timerProgressBar: true,
@@ -62,12 +74,18 @@ export const useNotStore = defineStore("notification", {
         const topic = `parks/${park.id_park}/exit`;
         mqttService.publish(
           topic,
-          `O parque ${park.name} registou uma saída. Lugares disponíveis: ${park.free_places + 1}`
+          `O parque ${park.name} registou uma saída. Lugares disponíveis: ${
+            park.free_places + 1
+          }`
         );
         Swal.fire({
           title: "Sucesso!",
-          text: `O parque ${park.name} registou uma saída. Lugares disponíveis: ${Number(park.free_places) + 1}`,
-          icon: "success"
+          text: `O parque ${
+            park.name
+          } registou uma saída. Lugares disponíveis: ${
+            Number(park.free_places) + 1
+          }`,
+          icon: "success",
         });
       }
     },
